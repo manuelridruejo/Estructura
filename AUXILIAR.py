@@ -742,11 +742,8 @@ while puntos1 < 30 and puntos2 < 30:
     if manos_mano == 2:
       puntos_mano += puntos_truco
       termino = True
-    # Tercera Mano
-
-
-       
-
+    # Tercera Mano 
+    # Hola
 
     que_mano_es+=1
 
