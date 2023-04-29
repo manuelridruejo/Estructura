@@ -645,7 +645,7 @@ def CantarReTruco (p1, p2):
       puntos_truco = 3
       quiero = False
   
-  elif opcion == 2:
+  elif opcion == 2: 
     print(p1+', ha dicho QUIERO')
     puntos_truco = 3
 
