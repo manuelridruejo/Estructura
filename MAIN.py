@@ -1,6 +1,6 @@
 from Clases import *
-from ENVIDO_V2 import *
-from funciones import * ; jugar_primera
+from envido import *
+from funciones import * 
 
   
 def Main ():

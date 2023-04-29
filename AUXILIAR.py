@@ -218,6 +218,9 @@ def quien_es_mano (ronda, p1, puntos1, p2, puntos2):
 def JugarPrimera (p1, puntos1, p2, puntos2, cartasj1):
   termino = False
   hubo_envido = False
+  truco = False
+  retruco = False
+  vale_cuatro = False
   print(p1+', que desea hacer?')
   print('1. Cantar envido')
   print('2. Cantar truco')
@@ -236,7 +239,8 @@ def JugarPrimera (p1, puntos1, p2, puntos2, cartasj1):
     opcion = int(input('\tElija:'))
 
     if opcion == 1:
-      puntos_truco, quiero = CantarTruco (p1, p2)
+      truco = True
+      puntos_truco, quiero, retruco, vale_cuatro = CantarTruco (p1, p2)
     
       if quiero == False:
         termino = True
@@ -253,7 +257,8 @@ def JugarPrimera (p1, puntos1, p2, puntos2, cartasj1):
       termino = True
 
   elif opcion == 2:
-    puntos_truco, quiero = CantarTruco (p1, p2)
+    truco = True 
+    puntos_truco, quiero, retruco, vale_cuatro = CantarTruco (p1, p2)
     
     if quiero == False:
       termino = True
@@ -267,9 +272,12 @@ def JugarPrimera (p1, puntos1, p2, puntos2, cartasj1):
   elif opcion == 4:
     termino = True
   
-  return puntos1, puntos2, puntos_truco, termino, hubo_envido, carta1_p1, cartasj1
+  return puntos1, puntos2, puntos_truco, termino, hubo_envido, carta1_p1, cartasj1, truco, retruco, vale_cuatro
 
 def JugarPrimeraSinTanto (p1, puntos1, p2, puntos2, cartasj1):
+  truco = False
+  retruco = False
+  vale_cuatro = False
   print(p1+', que desea hacer?')
   print('1. Cantar truco')
   print('2. Tirar carta')
@@ -277,7 +285,8 @@ def JugarPrimeraSinTanto (p1, puntos1, p2, puntos2, cartasj1):
   opcion = int(input('\tElija:'))
 
   if opcion == 1:
-    puntos_truco, quiero = CantarTruco (p1, p2)
+    truco = True
+    puntos_truco, quiero, retruco, vale_cuatro = CantarTruco (p1, p2)
   
     if quiero == False:
       termino = True
@@ -291,7 +300,78 @@ def JugarPrimeraSinTanto (p1, puntos1, p2, puntos2, cartasj1):
   elif opcion == 3:
     termino = True
   
-  return puntos1, puntos2, puntos_truco, termino, carta1_p1, cartasj1
+  return puntos1, puntos2, puntos_truco, termino, carta1_p1, cartasj1, truco, retruco, vale_cuatro 
+
+def Jugar_Segunda(p1, puntos1, p2, puntos2, cartasj1, truco, retruco, vale_cuatro):
+  if truco == False:
+    print(p1+', que desea hacer?')
+    print('1. Cantar truco')
+    print('2. Tirar carta')
+    print('3. Irse al mazo')
+    opcion = int(input('\tElija:'))
+    
+    if opcion == 1:
+      truco = True
+      puntos_truco, quiero, retruco, vale_cuatro = CantarTruco (p1, p2)
+    
+      if quiero == False:
+        termino = True
+      
+      else:
+          carta1_p1,cartasj1 = tirar_2(p1,cartasj1)
+          print("{} ha tirado el {}".format(p1,carta1_p1))
+    elif opcion == 2:
+      carta1_p1,cartasj1 = tirar_2(p1,cartasj1)
+      print("{} ha tirado el {}".format(p1,carta1_p1))
+    elif opcion == 3:
+      termino = True
+  elif truco == True and retruco == False and vale_cuatro == False:
+      print(p1+', que desea hacer?')
+      print('1. Cantar retruco')
+      print('2. Tirar carta')
+      print('3. Irse al mazo')
+      opcion = int(input('\tElija:'))
+      if opcion == 1:
+        retruco = True
+        puntos_truco, quiero, vale_cuatro = CantarReTruco (p1, p2)
+      
+        if quiero == False:
+          termino = True
+        
+        else:
+            carta1_p1,cartasj1 = tirar_2(p1,cartasj1)
+            print("{} ha tirado el {}".format(p1,carta1_p1))
+      elif opcion == 2:
+        carta1_p1,cartasj1 = tirar_2(p1,cartasj1)
+        print("{} ha tirado el {}".format(p1,carta1_p1))
+      elif opcion == 3:
+        termino = True
+  elif truco == True and retruco == True and vale_cuatro == False:
+      print(p1+', que desea hacer?')
+      print('1. Cantar vale cuatro')
+      print('2. Tirar carta')
+      print('3. Irse al mazo')
+      opcion = int(input('\tElija:'))
+      if opcion == 1:
+        vale_cuatro = True
+        puntos_truco, quiero = CantarValeCuatro (p1, p2)
+      
+        if quiero == False:
+          termino = True
+        
+        else:
+            carta1_p1,cartasj1 = tirar_2(p1,cartasj1)
+            print("{} ha tirado el {}".format(p1,carta1_p1))
+      elif opcion == 2:
+        carta1_p1,cartasj1 = tirar_2(p1,cartasj1)
+        print("{} ha tirado el {}".format(p1,carta1_p1))
+      elif opcion == 3:
+        termino = True
+  elif vale_cuatro == True:
+     carta1_p1,cartasj1 = tirar_2(p1,cartasj1)
+     print("{} ha tirado el {}".format(p1,carta1_p1))
+     
+  return puntos1, puntos2, puntos_truco, termino, carta1_p1, cartasj1, truco, retruco, vale_cuatro 
 
 ######################################################## ENVIDO ##########################################################################
 
@@ -482,7 +562,8 @@ def envido (jug1, puntos1, jug2, puntos2):
 ########################################################## TRUCO ############################################################################
 
 def CantarTruco (p1,p2): 
-
+  retruco = False
+  vale_cuatro = False
   quiero = True
 
   print(p1,'ha cantado TRUCO!')
@@ -493,6 +574,7 @@ def CantarTruco (p1,p2):
   opcion = int(input('\tElija:'))
 
   if opcion == 1:
+    retruco = True 
     print(p2,'ha cantado RE TRUCO!')
     print(p1+', que desea hacer?')
     print('1. Vale cuatro')
@@ -501,6 +583,7 @@ def CantarTruco (p1,p2):
     opcion = int(input('\tElija:'))
 
     if opcion == 1:
+      vale_cuatro = True
       print(p1,'ha cantado QUIERO VALE CUATRO!')
       print(p2+', que desea hacer?')
       print('1. Quiero')
@@ -534,7 +617,7 @@ def CantarTruco (p1,p2):
     puntos_truco = 1
     quiero = False
   
-  return puntos_truco, quiero
+  return puntos_truco, quiero, retruco, vale_cuatro 
 
 def CantarReTruco (p1, p2):
   print(p2,'ha cantado RE TRUCO!')
@@ -545,6 +628,7 @@ def CantarReTruco (p1, p2):
   opcion = int(input('\tElija:'))
 
   if opcion == 1:
+    vale_cuatro = True
     print(p1,'ha cantado QUIERO VALE CUATRO!')
     print(p2+', que desea hacer?')
     print('1. Quiero')
@@ -569,7 +653,7 @@ def CantarReTruco (p1, p2):
     puntos_truco = 2
     quiero = False
 
-  return puntos_truco, quiero
+  return puntos_truco, quiero, vale_cuatro
 
 def CantarValeCuatro(p1, p2):
   print(p1,'ha cantado QUIERO VALE CUATRO!')
@@ -606,29 +690,62 @@ while puntos1 < 30 and puntos2 < 30:
   puntos_truco = 1
   que_mano_es = 1
   hubo_envido = False
-
-  while que_mano_es < 4:
+  while termino == False:
+    manos_pie = 0
+    manos_mano = 0
+    parda1 = False
+    parda2 = False
+    parda3 = False
+    puntos_mano, puntos_pie, puntos_truco, termino, hubo_envido, carta1_mano, cartasmano, truco, retruco, vale_cuatro = JugarPrimera (mano, puntos_mano, pie, puntos_pie,cartasmano)
   
-    puntos_mano, puntos_pie, puntos_truco, termino, hubo_envido, carta1_mano, cartasmano = JugarPrimera (mano, puntos_mano, pie, puntos_pie,cartasmano)
-    if termino == True:
-      break
-    
     if hubo_envido == True:
-      puntos_pie, puntos_mano, puntos_truco, termino, carta1_pie, cartas_pies = JugarPrimeraSinTanto (pie, puntos_pie, mano, puntos_mano,cartaspie)
-      if termino == True:
-        break
+      puntos_pie, puntos_mano, puntos_truco, termino, carta1_pie, cartas_pies, truco, retruco, vale_cuatro = JugarPrimeraSinTanto (pie, puntos_pie, mano, puntos_mano,cartaspie)
     
     elif hubo_envido == False:
-      puntos_pie, puntos_mano, puntos_truco, termino, hubo_envido, carta1_pie, cartas_pies = JugarPrimera (pie, puntos_pie, mano, puntos_mano,cartaspie)
+      puntos_pie, puntos_mano, puntos_truco, termino, hubo_envido, carta1_pie, cartas_pies, truco, retruco, vale_cuatro = JugarPrimera (pie, puntos_pie, mano, puntos_mano,cartaspie)
 
     if carta1_pie > carta1_mano:
-       ganador = pie 
+       ganador = pie
+       manos_pie += 1 
     elif carta1_mano > carta1_pie:
        ganador = mano 
+       manos_mano += 1
     elif carta1_mano == carta1_pie:
-       parda=True
-       
+       parda1=True
+    #Segunda Mano
+    if ganador == pie:
+      puntos_pie, puntos_mano, puntos_truco, termino, carta2_pie, cartas_pies, truco, retruco, vale_cuatro = Jugar_Segunda(pie, puntos_pie, mano, puntos_mano,cartaspie, truco, retruco, vale_cuatro)
+      puntos_mano, puntos_pie, puntos_truco, termino, carta2_mano, cartas_mano, truco, retruco, vale_cuatro = Jugar_Segunda(mano, puntos_mano,pie,puntos_pie,cartasmano,truco,retruco,vale_cuatro)
+    elif ganador == mano: 
+      puntos_mano, puntos_pie, puntos_truco, termino, carta2_mano, cartas_mano, truco, retruco, vale_cuatro = Jugar_Segunda(mano, puntos_mano,pie,puntos_pie,cartasmano,truco,retruco,vale_cuatro)
+      puntos_pie, puntos_mano, puntos_truco, termino, carta2_pie, cartas_pies, truco, retruco, vale_cuatro = Jugar_Segunda(pie, puntos_pie, mano, puntos_mano,cartaspie, truco, retruco, vale_cuatro)
+    elif  parda1 == True:
+      puntos_mano, puntos_pie, puntos_truco, termino, carta2_mano, cartas_mano, truco, retruco, vale_cuatro = Jugar_Segunda(mano, puntos_mano,pie,puntos_pie,cartasmano,truco,retruco,vale_cuatro)
+      puntos_pie, puntos_mano, puntos_truco, termino, carta2_pie, cartas_pies, truco, retruco, vale_cuatro = Jugar_Segunda(pie, puntos_pie, mano, puntos_mano,cartaspie, truco, retruco, vale_cuatro)
+      if carta2_mano == carta2_pie:
+        parda2 = True
+      elif carta2_mano > carta2_pie:
+        puntos_mano += puntos_truco
+        termino = True
+      elif carta2_pie > carta2_mano:
+        puntos_pie += puntos_truco
+        termino = True
+    elif carta2_mano > carta2_pie:
+      ganador = mano
+      manos_mano += 1
+    elif carta2_pie > carta2_mano:
+      ganador = pie
+      manos_pie += 1
+    if manos_pie == 2:
+      puntos_pie += puntos_truco
+      termino = True
+    if manos_mano == 2:
+      puntos_mano += puntos_truco
+      termino = True
+    # Tercera Mano
 
+
+       
 
 
     que_mano_es+=1
