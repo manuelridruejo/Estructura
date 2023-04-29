@@ -246,12 +246,12 @@ def JugarPrimera (p1, puntos1, p2, puntos2, cartasj1):
         termino = True
       
       else:
-        carta1_p1, cartasj1 = tirar_3(p1,cartasj1)
-        print("{} ha tirado el {}".format(p1,carta1_p1))
+        carta1_p1, cartasj1 = tirar_3(p1,str(cartasj1))
+        print("{} ha tirado el {}".format(p1,str(carta1_p1)))
     
     elif opcion == 2:
-        carta1_p1, cartasj1 = tirar_3(p1,cartasj1)
-        print("{} ha tirado el {}".format(p1,carta1_p1))
+        carta1_p1, cartasj1 = tirar_3(p1,str(cartasj1))
+        print("{} ha tirado el {}".format(p1,str(carta1_p1)))
     
     elif opcion == 3:
       termino = True
@@ -262,16 +262,17 @@ def JugarPrimera (p1, puntos1, p2, puntos2, cartasj1):
     
     if quiero == False:
       termino = True
+      return puntos1, puntos2, puntos_truco, termino, hubo_envido, "", cartasj1, truco, retruco, vale_cuatro
     
     else:
         carta1_p1, cartasj1 = tirar_3(p1,cartasj1)
-        print("{} ha tirado el {}".format(p1,carta1_p1))
+        print("{} ha tirado el {}".format(p1,str(carta1_p1)))
   elif opcion == 3:
     carta1_p1, cartasj1 = tirar_3(p1,cartasj1)
-    print("{} ha tirado el {}".format(p1,carta1_p1))
+    print("{} ha tirado el {}".format(p1,str(carta1_p1)))
   elif opcion == 4:
     termino = True
-  
+    return puntos1, puntos2, puntos_truco, termino, hubo_envido, "", cartasj1, truco, retruco, vale_cuatro
   return puntos1, puntos2, puntos_truco, termino, hubo_envido, carta1_p1, cartasj1, truco, retruco, vale_cuatro
 
 def JugarPrimeraSinTanto (p1, puntos1, p2, puntos2, cartasj1):
@@ -690,20 +691,23 @@ while puntos1 < 30 and puntos2 < 30:
   puntos_truco = 1
   que_mano_es = 1
   hubo_envido = False
-  while termino == False:
+  termino = False
+  while que_mano_es < 4:
     manos_pie = 0
     manos_mano = 0
     parda1 = False
     parda2 = False
     parda3 = False
     puntos_mano, puntos_pie, puntos_truco, termino, hubo_envido, carta1_mano, cartasmano, truco, retruco, vale_cuatro = JugarPrimera (mano, puntos_mano, pie, puntos_pie,cartasmano)
-  
+
     if hubo_envido == True:
       puntos_pie, puntos_mano, puntos_truco, termino, carta1_pie, cartas_pies, truco, retruco, vale_cuatro = JugarPrimeraSinTanto (pie, puntos_pie, mano, puntos_mano,cartaspie)
-    
+      if termino == True: #HAY QUE PRINTEAR CUANTOS PUNTOS SUMA Y QUIEN GANO LA MANO EN TODOS LOS BREAKS Y VER QUIEN GANO LOS PUNTOS
+        break
     elif hubo_envido == False:
       puntos_pie, puntos_mano, puntos_truco, termino, hubo_envido, carta1_pie, cartas_pies, truco, retruco, vale_cuatro = JugarPrimera (pie, puntos_pie, mano, puntos_mano,cartaspie)
-
+      if termino == True:
+         break
     if carta1_pie > carta1_mano:
        ganador = pie
        manos_pie += 1 
@@ -713,23 +717,36 @@ while puntos1 < 30 and puntos2 < 30:
     elif carta1_mano == carta1_pie:
        parda1=True
     #Segunda Mano
+    que_mano_es+=1
     if ganador == pie:
       puntos_pie, puntos_mano, puntos_truco, termino, carta2_pie, cartas_pies, truco, retruco, vale_cuatro = Jugar_Segunda(pie, puntos_pie, mano, puntos_mano,cartaspie, truco, retruco, vale_cuatro)
+      if termino == True: 
+        break
       puntos_mano, puntos_pie, puntos_truco, termino, carta2_mano, cartas_mano, truco, retruco, vale_cuatro = Jugar_Segunda(mano, puntos_mano,pie,puntos_pie,cartasmano,truco,retruco,vale_cuatro)
+      if termino == True: 
+        break
     elif ganador == mano: 
       puntos_mano, puntos_pie, puntos_truco, termino, carta2_mano, cartas_mano, truco, retruco, vale_cuatro = Jugar_Segunda(mano, puntos_mano,pie,puntos_pie,cartasmano,truco,retruco,vale_cuatro)
+      if termino == True: 
+        break
       puntos_pie, puntos_mano, puntos_truco, termino, carta2_pie, cartas_pies, truco, retruco, vale_cuatro = Jugar_Segunda(pie, puntos_pie, mano, puntos_mano,cartaspie, truco, retruco, vale_cuatro)
-    elif  parda1 == True:
+      if termino == True: 
+        break
+    elif  parda1 == True: #Se juega la parda
       puntos_mano, puntos_pie, puntos_truco, termino, carta2_mano, cartas_mano, truco, retruco, vale_cuatro = Jugar_Segunda(mano, puntos_mano,pie,puntos_pie,cartasmano,truco,retruco,vale_cuatro)
+      if termino == True: 
+        break
       puntos_pie, puntos_mano, puntos_truco, termino, carta2_pie, cartas_pies, truco, retruco, vale_cuatro = Jugar_Segunda(pie, puntos_pie, mano, puntos_mano,cartaspie, truco, retruco, vale_cuatro)
-      if carta2_mano == carta2_pie:
+      if termino == True: 
+        break
+      if carta2_mano == carta2_pie: #Se pardo segunda
         parda2 = True
-      elif carta2_mano > carta2_pie:
+      elif carta2_mano > carta2_pie: #gano la mano
         puntos_mano += puntos_truco
-        termino = True
-      elif carta2_pie > carta2_mano:
+        break
+      elif carta2_pie > carta2_mano: #gano el pie
         puntos_pie += puntos_truco
-        termino = True
+        break 
     elif carta2_mano > carta2_pie:
       ganador = mano
       manos_mano += 1
@@ -738,12 +755,10 @@ while puntos1 < 30 and puntos2 < 30:
       manos_pie += 1
     if manos_pie == 2:
       puntos_pie += puntos_truco
-      termino = True
+      break
     if manos_mano == 2:
       puntos_mano += puntos_truco
-      termino = True
+      break 
     # Tercera Mano 
-    # Hola
-
-    que_mano_es+=1
+    que_mano_es += 1
 
