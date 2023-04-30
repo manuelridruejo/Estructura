@@ -1,5 +1,7 @@
 from random import shuffle, randint
-
+from envido import *
+from funciones import * 
+from TRUCO import *
 
 PALOS = ["Oro", "Espada", "Copa", "Basto"] # Variable global en mayúsculas Guía PEP-8
 NUMEROS = [1, 2, 3, 4, 5, 6, 7, 10, 11, 12]
@@ -144,4 +146,3 @@ class Mazo():
         for i in range(6):
             cartas.append(self.cartas[i])
         return cartas
-    
