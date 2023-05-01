@@ -1,0 +1,33 @@
+
+Se ha iniciado una nueva partida entre: Manuel y Facundo
+Ha ganado: Manuel se le suman 4 puntos
+Puntos de Manuel: 4
+Puntos de Facundo: 0
+------------------------------------------------------------------------------
+
+
+Ha ganado: Manuel se le suman 1 puntos
+Puntos de Manuel: 5
+Puntos de Facundo: 0
+------------------------------------------------------------------------------
+
+
+Ha ganado: Manuel se le suman 2 puntos
+Puntos de Manuel: 7
+Puntos de Facundo: 1
+------------------------------------------------------------------------------
+
+
+Ha ganado: Facundo se le suman 2 puntos
+Puntos de Manuel: 11
+Puntos de Facundo: 3
+------------------------------------------------------------------------------
+
+
+Ha ganado: Manuel se le suman 2 puntos
+Puntos de Manuel: 32
+Puntos de Facundo: 3
+------------------------------------------------------------------------------
+
+
+FELICITACIONES Manuel!!! USTED HA GANADO LA PARTIDA!!!
