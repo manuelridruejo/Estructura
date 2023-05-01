@@ -147,6 +147,9 @@ class Mazo():
       cartas.append(self.cartas[i])
     return cartas
 
+class Jugador():
+	def __init__(self, nombre : str):
+          self.nombre = nombre
 
 
 
@@ -1088,16 +1091,23 @@ def Jugar_Tercera(p1, puntos1, p2, puntos2, cartasj1, puntos_truco):
 
 ############################################################## MAIN ###########################################################################
 
+registro_partidas = open("Registro partidas.txt", "a") 
 
+nombre1 = input("Ingrese el nombre de un jugador")
+nombre2 = input("Ingrese el nombre del otro jugador")
 
+jugador1 = Jugador(nombre1)
+jugador2 = Jugador(nombre2)
 
-
-
-p1 = 'Jugador 1 '
+p1 = jugador1.nombre
 puntos1 = 0
-p2 = 'Jugador 2'
+p2 = jugador2.nombre 
 puntos2 = 0
 ronda = 1
+
+escribir = "Se ha iniciado una nueva partida entre: " + p1 + " y " + p2
+
+registro_partidas.write(escribir)
 
 while puntos1 < 30 and puntos2 < 30:
   
@@ -1300,9 +1310,12 @@ while puntos1 < 30 and puntos2 < 30:
   if ganador == mano:
     puntos_mano += puntos_truco
     print("\nHa ganado: ", mano, " se le suman ", puntos_truco, " puntos")
+    registro_partidas.write("\nHa ganado: ", mano, " se le suman ", puntos_truco, " puntos") 
+    
   elif ganador == pie:
     puntos_pie += puntos_truco
     print("\nHa ganado: ", pie, " se le suman ", puntos_truco, " puntos")
+    registro_partidas.write("\nHa ganado: ", pie, " se le suman ", puntos_truco, " puntos") 
 
   if p1 == mano:
     puntos1 = puntos_mano
@@ -1311,26 +1324,38 @@ while puntos1 < 30 and puntos2 < 30:
     puntos2 = puntos_mano
     puntos1 = puntos_pie
   
-  print('\nPuntos del jugador 1: '+str(puntos1))
-  print('Puntos del jugador 2: '+str(puntos2))
+  print('\nPuntos de '+ p1 + ": " + str(puntos1))
+  print('\nPuntos de' + p2 + ": " + str(puntos2))
   print('\n------------------------------------------------------------------------------\n\n')
+  registro_partidas.write('\nPuntos de '+ p1 + ": " + str(puntos1))
+  registro_partidas.write('\nPuntos de ' + p2 + ": " + str(puntos2))
+  registro_partidas.write('\n------------------------------------------------------------------------------\n\n')
 
   ronda +=1
 
 
 if puntos1 >= 30 and puntos2 >= 30:
-  
+        
   if puntos1 > puntos2:
     print('\nFELICITACIONES ' + p1 + '!!! USTED HA GANADO LA PARTIDA!!!')
-
+    registro_partidas.write('\nFELICITACIONES ' + p1 + '!!! USTED HA GANADO LA PARTIDA!!!')
+        
   elif puntos2 > puntos1:
     print('\nFELICITACIONES ' + p2 + '!!! USTED HA GANADO LA PARTIDA!!!')
+    registro_partidas.write('\nFELICITACIONES ' + p2 + '!!! USTED HA GANADO LA PARTIDA!!!')
 
   elif puntos2 == puntos1:
     print('\nHA HABIDO UN EMPATE.')
+    registro_partidas.write('\nHA HABIDO UN EMPATE.')
 
 elif puntos2 >= 30:
   print('\nFELICITACIONES ' + p2 + '!!! USTED HA GANADO LA PARTIDA!!!')
+  registro_partidas.write('\nFELICITACIONES ' + p2 + '!!! USTED HA GANADO LA PARTIDA!!!')
 
 elif puntos1 >= 30:
   print('\nFELICITACIONES ' + p1 + '!!! USTED HA GANADO LA PARTIDA!!!')
+  registro_partidas.write('\nFELICITACIONES ' + p1 + '!!! USTED HA GANADO LA PARTIDA!!!')
+
+
+
+  registro_partidas.close() 
