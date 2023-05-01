@@ -1,9 +1,8 @@
-from Clases import *
-from envido import *
-from funciones import * 
-from TRUCO import *
+import Clases as C
+import envido as E
+import funciones as F
+import TRUCO as T
 
-  
 p1 = 'Jugador 1 '
 puntos1 = 0
 p2 = 'Jugador 2'
@@ -11,16 +10,16 @@ puntos2 = 0
 ronda = 1
 
 while puntos1 < 30 and puntos2 < 30:
-  mazo=Mazo()
+  mazo = C.Mazo()
   cartas_en_juego = mazo.repartir()
-  mano, puntos_mano, pie, puntos_pie = quien_es_mano (ronda, p1, puntos1, p2, puntos2)
+  mano, puntos_mano, pie, puntos_pie = F.quien_es_mano (ronda, p1, puntos1, p2, puntos2)
   cartasmano = [cartas_en_juego[0],cartas_en_juego[2],cartas_en_juego[4]]
   cartaspie = [cartas_en_juego[1],cartas_en_juego[3],cartas_en_juego[5]]
   print(mano, 'es MANO. Estas son sus cartas:')
-  print(mostrar_cartas(cartasmano))
+  print(F.mostrar_cartas(cartasmano))
   print('\n\n')
   print(pie, 'es PIE. Estas son sus cartas:')
-  print(mostrar_cartas(cartaspie)) 
+  print(F.mostrar_cartas(cartaspie)) 
   puntos_truco = 1
   que_mano_es = 1
   hubo_envido = False

@@ -1,6 +1,6 @@
-from Clases import *
-from envido import * 
-from TRUCO import *
+import Clases
+import envido
+import TRUCO
 
 def mostrar_cartas(lista):
     cartas = ""

@@ -1,7 +1,3 @@
-from Clases import *
-from funciones import * 
-from TRUCO import *
-
 def real_envido (jug1, puntos1, jug2, puntos2, puntos_tanto, puntos_al_no):
   print(jug1,'ha cantado REAL ENVIDO')
   print('\n',jug2,', que desea hacer?')
