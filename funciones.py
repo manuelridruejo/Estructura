@@ -1,65 +1,57 @@
 import TRUCO as T
 import envido as E
-import Clases as C
 
-def mostrar_cartas(lista):
+def mostrar_cartas (lista):
   cartas = "sus cartas son: "
   for i in lista:
-    cartas += (str(i)+', ')
+    cartas += (str(i) + ', ')
   print(cartas)
 
 
 def tirar_3 (jugador, cartas):
   lista = []
-  print("\n"+jugador+", que carta desea tirar:")
-  print("0. "+str(cartas[0]))
-  print("1. "+str(cartas[1]))
-  print("2. "+str(cartas[2]))
-  op = int(input("Elija:"))
+  print("\n" + jugador + ", que carta desea tirar: ")
+  print("1. " + str(cartas[0]))
+  print("2. " + str(cartas[1]))
+  print("3. " + str(cartas[2]))
+  op = (input("Elija: "))
 
-  while op not in [0,1,2]:
-    print("\n"+jugador+", que carta desea tirar:")
-    print("0. "+str(cartas[0]))
-    print("1. "+str(cartas[1]))
-    print("2. "+str(cartas[2]))
-    op = int(input("Elija entre 0,1,2:"))
+  while op not in [1, 2, 3]:
+    op = (input('Por favor, elija 1, 2 o 3: '))
 
   for j in cartas:
-    if j != cartas[op]:
+    if j != cartas[op-1]:
       lista.append(j)
 
-  return cartas[op], lista
+  return cartas[op-1], lista
 
 
 def tirar_2(jugador,cartas):
   
   lista = []
   
-  print("\n"+jugador+", que carta desea tirar:")
-  print("0. "+str(cartas[0]))
-  print("1. "+str(cartas[1]))
-  op = int(input("Elija:"))
+  print("\n" + jugador + ", que carta desea tirar: ")
+  print("1. " + str(cartas[0]))
+  print("2. " + str(cartas[1]))
+  op = (input("Elija: "))
   
-  while op not in [0,1]:
-    print("\n"+jugador+", que carta desea tirar:")
-    print("0."+str(cartas[0]))
-    print("1."+str(cartas[1]))
-    op = int(input("Elija entre 0,1:"))
+  while op not in [1, 2]:
+    op = (input('Por favor, elija 1 o 2: '))
   
   for j in cartas:
-    if j != cartas[op]:
+    if j != cartas [op-1]:
       lista.append(j)
   
   return cartas[op],lista
 
-def tirar_1(jugador, cartas):
+def tirar_1 (jugador, cartas):
   
-  print('\n'+jugador+", le queda una sola carta, presione 0 para tirarla:")
-  print("0."+str(cartas[0]))
-  op = int(input("Elija:"))
+  print('\n' + jugador + ", le queda una sola carta, presione 1 para tirarla: ")
+  print("1." + str(cartas[0]))
+  op = (input("Elija: "))
   
-  while op != 0:
-    op = int(input("Elija 0:"))
+  while op != 1:
+    op = (input("Elija 1: "))
 
   return cartas[0], []
 
@@ -97,7 +89,10 @@ def JugarPrimera (jug1, puntos1, cartasj1, jug2, puntos2, cartasj2, puntos_truco
       print('2. Cantar truco')
       print('3. Tirar carta')
       print('4. Irse al mazo') 
-      opcion = int(input('Elija:'))
+      opcion = (input('Elija: '))
+
+      while opcion not in [1, 2, 3, 4]:
+        opcion = (input('Por favor, elija 1, 2, 3 o 4: '))
 
       if opcion == 1:
         puntos1, puntos2 = E.envido (jug1, puntos1, cartasj1, jug2, puntos2, cartasj2, mano)
@@ -108,7 +103,10 @@ def JugarPrimera (jug1, puntos1, cartasj1, jug2, puntos2, cartasj2, puntos_truco
         print('1. Cantar truco')
         print('2. Tirar carta')
         print('3. Irse al mazo')
-        opcion = int(input('Elija:'))
+        opcion = (input('Elija: '))
+
+        while opcion not in [1, 2, 3]:
+          opcion = (input('Por favor, elija 1, 2 o 3: '))
 
         if opcion == 1:
           puntos_truco, termino, ganador, quiero = T.CantarTruco (jug1, jug2)
@@ -147,7 +145,10 @@ def JugarPrimera (jug1, puntos1, cartasj1, jug2, puntos2, cartasj2, puntos_truco
       print('2. Cantar retruco')
       print('3. Tirar carta')
       print('4. Irse al mazo') 
-      opcion = int(input('Elija:'))
+      opcion = (input('Elija: '))
+
+      while opcion not in [1, 2, 3, 4]:
+        opcion = (input('Por favor, elija 1, 2, 3 o 4: '))
 
       if opcion == 1:
         puntos1, puntos2 = E.envido (jug1, puntos1, cartasj1, jug2, puntos2, cartasj2, mano)
@@ -158,7 +159,10 @@ def JugarPrimera (jug1, puntos1, cartasj1, jug2, puntos2, cartasj2, puntos_truco
         print('1. Cantar retruco')
         print('2. Tirar carta')
         print('3. Irse al mazo')
-        opcion = int(input('Elija:'))
+        opcion = (input('Elija: '))
+
+        while opcion not in [1, 2, 3]:
+          opcion = (input('Por favor, elija 1, 2 o 3: '))
 
         if opcion == 1:
           puntos_truco, termino, ganador, quiero = T.CantarReTruco (jug1, jug2)
@@ -197,7 +201,10 @@ def JugarPrimera (jug1, puntos1, cartasj1, jug2, puntos2, cartasj2, puntos_truco
       print('2. Cantar vale cuatro')
       print('3. Tirar carta')
       print('4. Irse al mazo') 
-      opcion = int(input('Elija:'))
+      opcion = (input('Elija: '))
+
+      while opcion not in [1, 2, 3, 4]:
+        opcion = (input('Por favor, elija 1, 2, 3 o 4: '))
 
       if opcion == 1:
         puntos1, puntos2 = E.envido (jug1, puntos1, cartasj1, jug2, puntos2, cartasj2, mano)
@@ -246,7 +253,10 @@ def JugarPrimera (jug1, puntos1, cartasj1, jug2, puntos2, cartasj2, puntos_truco
       print('1. Cantar envido')
       print('2. Tirar carta')
       print('3. Irse al mazo') 
-      opcion = int(input('Elija:'))
+      opcion = (input('Elija: '))
+
+      while opcion not in [1, 2, 3]:
+        opcion = (input('Por favor, elija 1, 2 o 3: '))
 
       if opcion == 1:
         puntos1, puntos2 = E.envido (jug1, puntos1, cartasj1, jug2, puntos2, cartasj2, mano)
@@ -256,7 +266,10 @@ def JugarPrimera (jug1, puntos1, cartasj1, jug2, puntos2, cartasj2, puntos_truco
         mostrar_cartas (cartasj1)
         print('1. Tirar carta')
         print('2. Irse al mazo')
-        opcion = int(input('Elija:'))
+        opcion = (input('Elija: '))
+
+        while opcion not in [1, 2]:
+          opcion = (input('Por favor, elija 1 o 2: '))
 
         if opcion == 1:
           carta1_p1, cartasj1 = tirar_3 (jug1, cartasj1)
@@ -280,7 +293,10 @@ def JugarPrimera (jug1, puntos1, cartasj1, jug2, puntos2, cartasj2, puntos_truco
     print('1. Cantar envido')
     print('2. Tirar carta')
     print('3. Irse al mazo') 
-    opcion = int(input('Elija:'))
+    opcion = (input('Elija: '))
+
+    while opcion not in [1, 2, 3]:
+      opcion = (input('Por favor, elija 1, 2 o 3: '))
 
     if opcion == 1:
       puntos1, puntos2 = E.envido (jug1, puntos1, cartasj1, jug2, puntos2, cartasj2, mano)
@@ -290,7 +306,10 @@ def JugarPrimera (jug1, puntos1, cartasj1, jug2, puntos2, cartasj2, puntos_truco
       mostrar_cartas (cartasj1)
       print('1. Tirar carta')
       print('2. Irse al mazo')
-      opcion = int(input('Elija:'))
+      opcion = (input('Elija: '))
+
+      while opcion not in [1, 2]:
+        opcion = (input('Por favor, elija 1 o 2: '))
 
       if opcion == 1:
         carta1_p1, cartasj1 = tirar_3 (jug1, cartasj1)
@@ -325,15 +344,10 @@ def JugarPrimeraSinTanto (jug1, cartasj1, jug2, puntos_truco, quiero):          
       print('1. Cantar truco')
       print('2. Tirar carta')
       print('3. Irse al mazo')
-      opcion = int(input('Elija:'))
+      opcion = (input('Elija: '))
 
-      while opcion not in [1,2,3]:
-        print('\n' + jug1 + ', que desea hacer?')
-        mostrar_cartas (cartasj1)
-        print('1. Cantar truco')
-        print('2. Tirar carta')
-        print('3. Irse al mazo')
-        opcion = int(input('Elija:'))
+      while opcion not in [1, 2, 3]:
+        opcion = (input('Por favor, elija 1, 2 o 3: '))
 
       if opcion == 1:
         puntos_truco, termino, ganador, quiero = T.CantarTruco (jug1, jug2)
@@ -356,15 +370,10 @@ def JugarPrimeraSinTanto (jug1, cartasj1, jug2, puntos_truco, quiero):          
       print('1. Cantar retruco')
       print('2. Tirar carta')
       print('3. Irse al mazo')
-      opcion = int(input('Elija:'))
+      opcion = (input('Elija: '))
       
-      while opcion not in [1,2,3]:
-        print('\n' + jug1 + ', que desea hacer?')
-        mostrar_cartas (cartasj1)
-        print('1. Cantar retruco')
-        print('2. Tirar carta')
-        print('3. Irse al mazo')
-        opcion = int(input('Elija:'))
+      while opcion not in [1, 2, 3]:
+        opcion = (input('Por favor, elija 1, 2 o 3: '))
 
       if opcion == 1:
         puntos_truco, termino, ganador, quiero = T.CantarReTruco (jug1, jug2)
@@ -387,15 +396,10 @@ def JugarPrimeraSinTanto (jug1, cartasj1, jug2, puntos_truco, quiero):          
       print('1. Cantar vale cuatro')
       print('2. Tirar carta')
       print('3. Irse al mazo')
-      opcion = int(input('Elija:'))
+      opcion = (input('Elija: '))
 
-      while opcion not in [1,2,3,]:
-        print('\n' + jug1 + ', que desea hacer?')
-        mostrar_cartas (cartasj1)
-        print('1. Cantar vale cuatro')
-        print('2. Tirar carta')
-        print('3. Irse al mazo')
-        opcion = int(input('Elija:'))
+      while opcion not in [1, 2, 3]:
+        opcion = (input('Por favor, elija 1, 2 o 3: '))
       
       if opcion == 1:
         puntos_truco, termino, ganador, quiero = T.CantarValeCuatro (jug1, jug2)
@@ -417,14 +421,10 @@ def JugarPrimeraSinTanto (jug1, cartasj1, jug2, puntos_truco, quiero):          
       mostrar_cartas (cartasj1)
       print('1. Tirar carta')
       print('2. Irse al mazo')
-      opcion = int(input('Elija:'))
+      opcion = (input('Elija: '))
 
-      while opcion not in [1,2]:
-        print('\n' + jug1 + ', que desea hacer?')
-        mostrar_cartas (cartasj1)
-        print('1. Tirar carta')
-        print('2. Irse al mazo')
-        opcion = int(input('Elija:'))
+      while opcion not in [1, 2]:
+        opcion = (input('Por favor, elija 1 0 2: '))
 
       if opcion == 1:
         carta1_p1, cartasj1 = tirar_3 (jug1, cartasj1)
@@ -439,14 +439,10 @@ def JugarPrimeraSinTanto (jug1, cartasj1, jug2, puntos_truco, quiero):          
     mostrar_cartas (cartasj1)
     print('1. Tirar carta')
     print('2. Irse al mazo')
-    opcion = int(input('Elija:'))
+    opcion = (input('Elija: '))
 
-    while opcion not in [1,2]:
-      print('\n' + jug1 + ', que desea hacer?')
-      mostrar_cartas(cartasj1)
-      print('1. Tirar carta')
-      print('2. Irse al mazo')
-      opcion = int(input('Elija:'))
+    while opcion not in [1, 2]:
+      opcion = (input('Por favor, elija 1 o 2: '))
 
     if opcion == 1:
       carta1_p1, cartasj1 = tirar_3 (jug1, cartasj1)
@@ -468,20 +464,15 @@ def Jugar_Segunda(p1, puntos1, p2, puntos2, cartasj1, puntos_truco, quiero):    
   if quiero == p1 or quiero == '':
 
     if puntos_truco == 1:
-      print('\n'+p1+', que desea hacer?')
+      print('\n' + p1 + ', que desea hacer?')
       mostrar_cartas(cartasj1)
       print('1. Cantar truco')
       print('2. Tirar carta')
       print('3. Irse al mazo')
-      opcion = int(input('Elija:'))
+      opcion = (input('Elija: '))
 
-      while opcion not in [1,2,3]:
-        print('\n' + p1 + ', que desea hacer?')
-        mostrar_cartas (cartasj1)
-        print('1. Cantar truco')
-        print('2. Tirar carta')
-        print('3. Irse al mazo')
-        opcion = int(input('Elija:'))
+      while opcion not in [1, 2, 3]:
+        opcion = (input('Por favor, elija 1, 2 o 3: '))
           
       if opcion == 1:
         
@@ -505,15 +496,10 @@ def Jugar_Segunda(p1, puntos1, p2, puntos2, cartasj1, puntos_truco, quiero):    
       print('1. Cantar retruco')
       print('2. Tirar carta')
       print('3. Irse al mazo')
-      opcion = int(input('\tElija:'))
+      opcion = (input('Elija: '))
 
-      while opcion not in [1,2,3]:
-        print('\n' + p1 + ', que desea hacer?')
-        mostrar_cartas (cartasj1)
-        print('1. Cantar retruco')
-        print('2. Tirar carta')
-        print('3. Irse al mazo')
-        opcion = int(input('\tElija:'))
+      while opcion not in [1, 2, 3]:
+        opcion = (input('Por favor, elija 1, 2 o 3: '))
 
       if opcion == 1:
         
@@ -537,15 +523,10 @@ def Jugar_Segunda(p1, puntos1, p2, puntos2, cartasj1, puntos_truco, quiero):    
       print('1. Cantar vale cuatro')
       print('2. Tirar carta')
       print('3. Irse al mazo')
-      opcion = int(input('\tElija:'))
+      opcion = (input('Elija: '))
 
-      while opcion not in [1,2,3]:
-        print('\n' + p1 + ', que desea hacer?')
-        mostrar_cartas (cartasj1)
-        print('1. Cantar vale cuatro')
-        print('2. Tirar carta')
-        print('3. Irse al mazo')
-        opcion = int(input('\tElija:'))
+      while opcion not in [1, 2, 3]:
+        opcion = (input('Por favor, elija 1, 2 o 3: '))
 
       if opcion == 1:     
         puntos_truco, termino, ganador, quiero = T.CantarValeCuatro (p1, p2)
@@ -571,14 +552,10 @@ def Jugar_Segunda(p1, puntos1, p2, puntos2, cartasj1, puntos_truco, quiero):    
     mostrar_cartas (cartasj1)
     print('1. Tirar carta')
     print('2. Irse al mazo')
-    opcion = int(input('Elija:'))
+    opcion = (input('Elija: '))
 
-    while opcion not in [1,2]:
-      print('\n' + p1 + ', que desea hacer?')
-      mostrar_cartas (cartasj1)
-      print('1. Tirar carta')
-      print('2. Irse al mazo')
-      opcion = int(input('Elija:'))
+    while opcion not in [1, 2]:
+        opcion = (input('Por favor, elija 1 o 2: '))
 
     if opcion == 1:
       carta1_p1, cartasj1 = tirar_2 (p1, cartasj1)
@@ -605,15 +582,10 @@ def Jugar_Tercera (p1, puntos1, p2, puntos2, cartasj1, puntos_truco, quiero):   
       print('1. Cantar truco')
       print('2. Tirar carta')
       print('3. Irse al mazo')
-      opcion = int(input('Elija:'))
+      opcion = (input('Elija: '))
 
-      while opcion not in [1,2,3]:
-        print('\n' + p1 + ', que desea hacer?')
-        mostrar_cartas (cartasj1)
-        print('1. Cantar truco')
-        print('2. Tirar carta')
-        print('3. Irse al mazo')
-        opcion = int(input('Elija:'))
+      while opcion not in [1, 2, 3]:
+        opcion = (input('Por favor, elija 1, 2 o 3: '))
       
       if opcion == 1:
         puntos_truco, termino, ganador, quiero = T.CantarTruco (p1, p2)
@@ -636,15 +608,10 @@ def Jugar_Tercera (p1, puntos1, p2, puntos2, cartasj1, puntos_truco, quiero):   
       print('1. Cantar retruco')
       print('2. Tirar carta')
       print('3. Irse al mazo')
-      opcion = int(input('\tElija:'))
+      opcion = (input('Elija: '))
 
-      while opcion not in [1,2,3]:
-        print('\n' + p1 + ', que desea hacer?')
-        mostrar_cartas (cartasj1)
-        print('1. Cantar retruco')
-        print('2. Tirar carta')
-        print('3. Irse al mazo')
-        opcion = int(input('\tElija:'))
+      while opcion not in [1, 2, 3]:
+        opcion = (input('Por favor, elija 1, 2 o 3: '))
 
       if opcion == 1:
         
@@ -668,19 +635,14 @@ def Jugar_Tercera (p1, puntos1, p2, puntos2, cartasj1, puntos_truco, quiero):   
       print('1. Cantar vale cuatro')
       print('2. Tirar carta')
       print('3. Irse al mazo')
-      opcion = int(input('\tElija:'))
+      opcion = (input('Elija: '))
 
-      while opcion not in [0,1,2,3]:
-        print('\n' + p1 + ', que desea hacer?')
-        mostrar_cartas (cartasj1)
-        print('1. Cantar vale cuatro')
-        print('2. Tirar carta')
-        print('3. Irse al mazo')
-        opcion = int(input('\tElija:'))
+      while opcion not in [1, 2, 3]:
+        opcion = (input('Por favor, elija 1, 2 o 3: '))
 
         if opcion == 1:
           
-          puntos_truco, temrino, ganador, quiero = T.CantarValeCuatro (p1, p2)
+          puntos_truco, termino, ganador, quiero = T.CantarValeCuatro (p1, p2)
         
           if termino != True:
             carta1_p1, cartasj1 = tirar_1 (p1, cartasj1)
@@ -703,14 +665,10 @@ def Jugar_Tercera (p1, puntos1, p2, puntos2, cartasj1, puntos_truco, quiero):   
     mostrar_cartas (cartasj1)
     print('1. Tirar carta')
     print('2. Irse al mazo')
-    opcion = int(input('Elija:'))
+    opcion = (input('Elija: '))
 
-    while opcion not in [1,2]:
-      print('\n' + p1 + ', que desea hacer?')
-      mostrar_cartas (cartasj1)
-      print('1. Tirar carta')
-      print('2. Irse al mazo')
-      opcion = int(input('Elija:'))
+    while opcion not in [1, 2]:
+        opcion = (input('Por favor, elija 1 o 2: '))
 
     if opcion == 1:
       carta1_p1, cartasj1 = tirar_1(p1, cartasj1)

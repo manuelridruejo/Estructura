@@ -1,6 +1,6 @@
 from random import shuffle, randint
 from datetime import date
-
+print(date.today()) 
 PALOS = ["Oro", "Espada", "Copa", "Basto"] # Variable global en mayúsculas Guía PEP-8
 NUMEROS = [1, 2, 3, 4, 5, 6, 7, 10, 11, 12]
 JERARQUIAS = {
@@ -91,35 +91,35 @@ JERARQUIAS_ENVIDO = {
 
 
 class Carta():
-  def __init__(self, palo : str, numero : int) -> None:
+  def __init__ (self, palo : str, numero : int):
     self.palo = palo
     self.numero = numero
     self.jerarquia = JERARQUIAS[(palo, numero)]
     self.jerarquia_envido = JERARQUIAS_ENVIDO [(palo, numero)]
 
-  def __str__(self):
+  def __str__ (self):
     return "{} de {}".format(self.numero, self.palo)
   
-  def __eq__(self, other):
+  def __eq__ (self, other):
     return self.jerarquia == other.jerarquia 
   
-  def __gt__(self, other):
+  def __gt__ (self, other):
     return self.jerarquia > other.jerarquia
 
-  def __lt__(self, other):
+  def __lt__ (self, other):
     return self.jerarquia < other.jerarquia 
   
-  def __ge__(self, other):
+  def __ge__ (self, other):
     return self.jerarquia >= other.jerarquia 
   
-  def __le__(self, other):
+  def __le__ (self, other):
     return self.jerarquia <= other.jerarquia 
   
-  def __ne__(self, other):
+  def __ne__ (self, other):
     return self.jerarquia != other.jerarquia 
 
   def __repr__ (self):
-    return str(self)
+    return str (self)
     
 
 class Mazo():
@@ -127,7 +127,7 @@ class Mazo():
     self.cartas = []
     for palo in PALOS:
       for numero in NUMEROS:
-        self.cartas.append(Carta(palo,numero))
+        self.cartas.append (Carta(palo, numero))
     self.mezclar()
   
   def __str__(self):
@@ -137,44 +137,45 @@ class Mazo():
     impresion_mazo = impresion_mazo[:-1]
     return impresion_mazo
   
-  def mezclar(self):
-    shuffle(self.cartas)
+  def mezclar (self):
+    shuffle (self.cartas)
   
-  def repartir(self):
+  def repartir (self):
     cartas=[]
     for i in range(6):
-      cartas.append(self.cartas[i])
+      cartas.append (self.cartas[i])
     return cartas
+
   
 class Jugador():
-    def __init__(self, nombre : str, apellido : str, DNI):
+    def __init__ (self, nombre : str, apellido : str, DNI):
           self.nombre = nombre
           self.apellido = apellido
           self.DNI= DNI
 
+
 class Jugadores():
-    def __init__(self, lista_jugadores) -> None:
+    def __init__ (self, lista_jugadores) -> None:
       self.lista_jugadores = lista_jugadores
-    def agregar_jugadores(self,jugador):
-      self.lista_jugadores.append(jugador.nombre_usuario)
+    def agregar_jugadores (self,jugador):
+      self.lista_jugadores.append (jugador.nombre_usuario)
+
 
 class Partida():
-    def __init__(self, resultado : str,jugadores, lista_partidas):
+    def __init__ (self, resultado : str,jugadores, lista_partidas):
         self.fecha = date.today()
-        self.codigo_partida = Partida.asignar_codigo(lista_partidas)
+        self.codigo_partida = Partida.asignar_codigo (lista_partidas)
         self.resultado = resultado
         self.jugadores = jugadores
-    def asignar_codigo(self, lista_partidas):
-        code=0
-        while code in lista_partidas:
-          code += 1
-        return code
-    def __str__(self) -> str:
-        return "La partida {} entre {} y {} salio {} y ocurrio el dia: {}".format(self.codigo_partida, self.jugadores[0], 
-                                                             self.jugadores[1], self.resultado, self.fecha)
+    def asignar_codigo (self, lista_partidas):
+        return max(lista_partidas) + 1
+
+    def __str__ (self) -> str:
+        return "La partida {} entre {} y {} salio {} y ocurrio el dia: {}".format(self.codigo_partida, self.jugadores[0], self.jugadores[1], self.resultado, self.fecha)
     
+
 class Partidas():
-    def __init__(self) -> None:
+    def __init__ (self) -> None:
       self.lista_partidas = []
-    def agrega_partida(self,partida):
-       self.lista_partidas.append(partida.codigo_partida)
+    def agrega_partida (self, ):
+       self.lista_partidas.append (Partida.codigo_partida)

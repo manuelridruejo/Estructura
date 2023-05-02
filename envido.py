@@ -1,4 +1,5 @@
 import funciones as F
+import MAIN as M 
 
 def real_envido (jug1, puntos1, cartasj1, jug2, puntos2, cartasj2, puntos_tanto, puntos_al_no, mano):
   
@@ -8,7 +9,10 @@ def real_envido (jug1, puntos1, cartasj1, jug2, puntos2, cartasj2, puntos_tanto,
   print('1. Falta envido')
   print('2. Quiero')
   print('3. No quiero')
-  opcion = int(input('Elija:'))
+  opcion = (input('Elija: '))
+
+  while opcion not in [1, 2, 3]:
+    opcion = (input('Por favor, elija 1, 2 o 3: '))
 
   if opcion == 1:                   
     puntos_al_no=puntos_tanto
@@ -21,8 +25,10 @@ def real_envido (jug1, puntos1, cartasj1, jug2, puntos2, cartasj2, puntos_tanto,
   elif opcion == 3:                
     print('\n' + jug2 + ' ha dicho NO QUIERO.',jug1,'suma',puntos_al_no,'puntos')
     puntos1 += puntos_al_no
+    M.registro_partidas.write(jug1, 'suma', puntos_al_no, 'puntos de tanto')
   
   return puntos1, puntos2
+
 
 def falta_envido (jug1, puntos1, cartasj1, jug2, puntos2, cartasj2, puntos_al_no, mano):
   
@@ -33,7 +39,10 @@ def falta_envido (jug1, puntos1, cartasj1, jug2, puntos2, cartasj2, puntos_al_no
   print('\n' + jug2 + ', que desea hacer?')
   print('1. Quiero')
   print('2. No quiero')
-  opcion = int(input('Elija:'))
+  opcion = (input('Elija:'))
+  
+  while opcion not in [1, 2]:
+    opcion = (input('Por favor, elija 1 o 2: '))
 
   if opcion == 1:                         
     print('\n' + jug2 + ' ha dicho QUIERO')
@@ -42,8 +51,10 @@ def falta_envido (jug1, puntos1, cartasj1, jug2, puntos2, cartasj2, puntos_al_no
   if opcion == 2:                         
     print('\n' + jug2 + ' ha dicho NO QUIERO.',jug1,'suma',puntos_al_no,'puntos')
     puntos1 += puntos_al_no
+    M.registro_partidas.write(jug1, 'suma', puntos_al_no, 'puntos de tanto')
   
   return puntos1, puntos2
+
 
 def contar_tanto(cartas):
     
@@ -64,12 +75,13 @@ def contar_tanto(cartas):
       tanto_02 = 20 + (int(cartas[0].jerarquia_envido) + int(cartas[2].jerarquia_envido))
         
     if n >= 1:
-      tanto=max(tanto_01,tanto_02,tanto_12)
+      tanto = max (tanto_01, tanto_02, tanto_12)
 
     if n == 0:
-      tanto=(max(cartas[0].jerarquia_envido, cartas[1].jerarquia_envido, cartas[2].jerarquia_envido))
+      tanto = (max (cartas[0].jerarquia_envido, cartas[1].jerarquia_envido, cartas[2].jerarquia_envido))
     
     return tanto
+
 
 def contar_los_tantos (cartasjug1, cartasjug2):
   
@@ -77,6 +89,7 @@ def contar_los_tantos (cartasjug1, cartasjug2):
   tanto2 = contar_tanto(cartasjug2)
   
   return tanto1, tanto2
+
 
 def contar_puntos_falta (puntos1,puntos2):
   
@@ -89,6 +102,7 @@ def contar_puntos_falta (puntos1,puntos2):
   
   return puntos_tanto
 
+
 def sumar_puntos_envido (jug1, puntos1, cartasj1, jug2, puntos2, cartasj2, puntos_tanto, mano):
   
   tanto1, tanto2 = contar_los_tantos (cartasj1, cartasj2) 
@@ -100,11 +114,13 @@ def sumar_puntos_envido (jug1, puntos1, cartasj1, jug2, puntos2, cartasj2, punto
       print(jug2 + ':', tanto2, 'son mejores!!')
       puntos2 += puntos_tanto
       print(jug2, 'suma', puntos_tanto, 'puntos de tanto')
+      M.registro_partidas.write(jug2, 'suma', puntos_tanto, 'puntos de tanto') 
 
     else:
       print(jug2 + ': son buenas.')
       puntos1 += puntos_tanto
       print(jug1, 'suma', puntos_tanto, 'puntos de tanto')
+      M.registro_partidas.write(jug1, 'suma', puntos_tanto, 'puntos de tanto') 
 
   elif jug2 == mano:
     print('\n' + jug2 + ':',tanto2)
@@ -113,15 +129,16 @@ def sumar_puntos_envido (jug1, puntos1, cartasj1, jug2, puntos2, cartasj2, punto
       print(jug1 + ':', tanto1, 'son mejores!!')
       puntos1 += puntos_tanto
       print(jug1, 'suma', puntos_tanto, 'puntos')
+      M.registro_partidas.write(jug1, 'suma', puntos_tanto, 'puntos de tanto') 
 
     else:
       print(jug1 + ': son buenas.')
       puntos2 += puntos_tanto
       print(jug2, 'suma', puntos_tanto, 'puntos')
+      M.registro_partidas.write(jug2, 'suma', puntos_tanto, 'puntos de tanto') 
 
   return puntos1, puntos2
   
-
 
 def envido (jug1, puntos1, cartasj1, jug2, puntos2, cartasj2, mano):
   
@@ -129,9 +146,12 @@ def envido (jug1, puntos1, cartasj1, jug2, puntos2, cartasj2, mano):
   print('1. Envido')
   print('2. Real envido')
   print('3. Falta envido')
-  opcion = int(input('Elija:'))
+  opcion = (input('Elija: '))
 
-  if opcion == 1:             #ENVIDO (j1)
+  while opcion not in [1, 2, 3]:
+    opcion = (input('Por favor, elija 1, 2 o 3: '))
+
+  if opcion == 1:          
     puntos_tanto = 2
     puntos_al_no = 1
     print('\n' + jug1,'ha cantado ENVIDO')
@@ -142,9 +162,12 @@ def envido (jug1, puntos1, cartasj1, jug2, puntos2, cartasj2, mano):
     print('3. Falta envido')
     print('4. Quiero')
     print('5. No quiero')
-    opcion = int(input('Elija:'))
+    opcion = (input('Elija: '))
 
-    if opcion == 1:              #ENVIDO (j1) ENVIDO (j2)
+    while opcion not in [1, 2, 3, 4, 5]:
+      opcion = (input('Por favor, elija 1, 2, 3, 4 o 5: '))
+
+    if opcion == 1:             
       puntos_al_no = puntos_tanto
       puntos_tanto = 4
       print('\n' + jug2, 'ha cantado ENVIDO')
@@ -154,43 +177,48 @@ def envido (jug1, puntos1, cartasj1, jug2, puntos2, cartasj2, mano):
       print('2. Falta envido')
       print('3. Quiero')
       print('4. No quiero')
-      opcion = int(input('Elija:'))
+      opcion = (input('Elija: '))
 
-      if opcion == 1:              #ENVIDO (j1) ENVIDO (j2) REAL ENVIDO (j1)
+      while opcion not in [1, 2, 3, 4]:
+        opcion = (input('Por favor, elija 1, 2, 3 o 4: '))
+
+      if opcion == 1:            
         puntos_al_no = puntos_tanto
         puntos_tanto = 7
         puntos1, puntos2 = real_envido (jug1, puntos1, cartasj1, jug2, puntos2, cartasj2, puntos_tanto, puntos_al_no, mano)
         
-      elif opcion == 2:                   #ENVIDO (j1) ENVIDO (j2) FALTA ENVIDO (j1)
+      elif opcion == 2:                 
         puntos_al_no=4
         puntos1, puntos2 = falta_envido (jug1, puntos1, cartasj1, jug2, puntos2, cartasj2, puntos_al_no, mano)
       
-      elif opcion == 3:                   # ENVIDO (j1) ENVIDO (j2) QUIERO (j1)
+      elif opcion == 3:                 
         print('\n' + jug1 + ' ha dicho QUIERO')
         puntos1, puntos2 = sumar_puntos_envido (jug1, puntos1, cartasj1, jug2, puntos2, cartasj2, puntos_tanto, mano)
       
-      elif opcion == 4:                   # ENVIDO (j1) ENVIDO (j2) NO QUIERO (j1)
+      elif opcion == 4:                 
         print('\n' + jug1 + ' ha dicho NO QUIERO.',jug2,'suma',puntos_al_no,'puntos')
         puntos2 += puntos_al_no
+        M.registro_partidas.write(jug2, 'suma', puntos_al_no, 'puntos de tanto')
     
-    elif opcion == 2:                     #ENVIDO (j1) REAL ENVIDO (j2)
+    elif opcion == 2:                  
       puntos_al_no = puntos_tanto
       puntos_tanto=5
       puntos1, puntos2 = real_envido (jug2, puntos2, cartasj2, jug1, puntos1, cartasj1, puntos_tanto, puntos_al_no, mano)
       
-    elif opcion == 3:                     #ENVIDO (j1) FALTA ENVIDO (j2)
+    elif opcion == 3:          
       puntos_al_no=2
       puntos1, puntos2 = falta_envido (jug2, puntos2, cartasj2, jug1, puntos1, cartasj1, puntos_al_no, mano)
     
-    elif opcion == 4:                     #ENVIDO (j1) QUIERO (j2)
+    elif opcion == 4:               
       print('\n' + jug2 + ' ha dicho QUIERO')
       puntos1, puntos2 = sumar_puntos_envido (jug1, puntos1, cartasj1, jug2, puntos2, cartasj2, puntos_tanto, mano)
     
-    elif opcion == 5:                     #ENVIDO (j1) NO QUIERO (j2)
+    elif opcion == 5:                  
       print('\n' + jug2 + ' ha dicho NO QUIERO.',jug1,'suma',puntos_al_no,'puntos')
       puntos1 += puntos_al_no
+      M.registro_partidas.write(jug1, 'suma', puntos_al_no, 'puntos de tanto')
     
-  elif opcion == 2:                     #REAL ENVIDO (j1) 
+  elif opcion == 2:                    
     puntos_al_no = 1
     puntos_tanto = 32
     puntos1, puntos2 = real_envido (jug1, puntos1, cartasj1, jug2, puntos2, cartasj2, puntos_tanto, puntos_al_no, mano)
