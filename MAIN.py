@@ -1,13 +1,16 @@
-import Clases as C
-import funciones as F
+from Clases import *
+from funciones import *
+
 
 registro_partidas = open("Registro partidas.txt", "r+") 
 registro_jugadores = open("Registro Jugadores.txt", "r+")
 registro_codigos = open("Registro codigos de partida.txt", "r+")
 jugadores_archivo = registro_jugadores.read() 
 codigos_archivo = registro_codigos.read()
-#;1;jug1;jug2;20-04-2020;resultado;/;2;jug3;jug4;20-05-2020;resultado2;/
+#;1;jug1;jug2;20-04-2020;resultado;/;2;jug3;jug4;20-05-2020;resultado2;/2
+
 #[[1,jug,jug2,20-04-2020,resultado],[2,jug3,jug4,20-05-2020,resultado2]]
+
 cod = ""
 lista_cod = []
 for caracter in codigos_archivo:
@@ -28,9 +31,10 @@ for codigo in lista_cod:
     else:
       aux.append(cod2)
       cod2 = ""
-  lista_partidas_final += aux
+  lista_partidas_final += [aux]
 
 lista_codigos_existentes = []
+
 for partida in lista_partidas_final:
   lista_codigos_existentes.append(int(partida[0]))
 
@@ -52,11 +56,12 @@ def Jugar():
 
   dni1 = 0
   dni_mal = True
-  while dni1 < 10000000 or dni1 > 99999999 or dni_mal == True:
+  while dni_mal == True:
     try:
       dni1 = int(input("Ingrese el DNI: ")) 
-      if dni1 >= 10000000 and dni1 <= 99999999:
-        dni_mal = False
+      while dni1 < 10000000 or dni1 > 99999999:
+        dni1 = int(input("DNI invalido. Por favor, ingrese el DNI (8 numeros): ")) 
+      dni_mal = False
     except:
       dni_mal = True
 
@@ -65,16 +70,17 @@ def Jugar():
 
   dni2 = 0
   dni_mal = True
-  while dni2 < 10000000 or dni2 > 99999999 or dni_mal == True:
+  while dni_mal == True:
     try:
       dni2 = int(input("Ingrese el DNI: ")) 
-      if dni2 >= 10000000 and dni2 <= 99999999:
-        dni_mal = False
+      while dni2 < 10000000 or dni2 > 99999999:
+        dni2 = int(input("DNI invalido. Por favor, ingrese el DNI (8 numeros): ")) 
+      dni_mal = False
     except:
       dni_mal = True
 
-  jugador1 = C.Jugador (nombre1, apellido1, dni1)
-  jugador2 = C.Jugador (nombre2, apellido2, dni2) 
+  jugador1 = Jugador (nombre1, apellido1, dni1)
+  jugador2 = Jugador (nombre2, apellido2, dni2) 
 
 
   p1 = jugador1.nombre
@@ -94,11 +100,11 @@ def Jugar():
 
   while puntos1 < 30 and puntos2 < 30:
     
-    mazo=C.Mazo()       #Se crea el mazo
+    mazo=Mazo()       #Se crea el mazo
 
     cartas_en_juego = mazo.repartir()      #Se reparte el mazo
 
-    mano, puntos_mano, pie, puntos_pie = F.quien_es_mano (ronda, p1, puntos1, p2, puntos2)        #Se determina que jugador es mano
+    mano, puntos_mano, pie, puntos_pie = quien_es_mano (ronda, p1, puntos1, p2, puntos2)        #Se determina que jugador es mano
 
     cartasmano = [cartas_en_juego[0],cartas_en_juego[2],cartas_en_juego[4]]         #Se dan las cartas al mano y al pie
     cartas_pie = [cartas_en_juego[1],cartas_en_juego[3],cartas_en_juego[5]]
@@ -106,10 +112,10 @@ def Jugar():
     print('\nComienza la ronda '+str(ronda)+'!')
 
     print('\n'+mano, 'es MANO.')
-    F.mostrar_cartas(cartasmano)
+    mostrar_cartas(cartasmano)
     print('\n')
     print(pie, 'es PIE.')
-    F.mostrar_cartas(cartas_pie)
+    mostrar_cartas(cartas_pie)
     puntos_truco = 1
     que_mano_es = 1
     hubo_envido = False
@@ -127,7 +133,7 @@ def Jugar():
 
       #Primera mano
 
-      puntos_mano, puntos_pie, puntos_truco, termino, hubo_envido, carta1_mano, cartas_mano, ganador, quiero  = F.JugarPrimera (mano, puntos_mano, cartasmano, pie, puntos_pie, cartas_pie, puntos_truco, quiero, mano)
+      puntos_mano, puntos_pie, puntos_truco, termino, hubo_envido, carta1_mano, cartas_mano, ganador, quiero  = JugarPrimera (mano, puntos_mano, cartasmano, pie, puntos_pie, cartas_pie, puntos_truco, quiero, mano)
       
       if termino == True:
         if quiero == '':
@@ -135,13 +141,13 @@ def Jugar():
         break
       
       if hubo_envido == True:
-        puntos_truco, termino, carta1_pie, cartas_pie, ganador, quiero  = F.JugarPrimeraSinTanto (pie, cartas_pie, mano, puntos_truco, quiero)
+        puntos_truco, termino, carta1_pie, cartas_pie, ganador, quiero  = JugarPrimeraSinTanto (pie, cartas_pie, mano, puntos_truco, quiero)
     
         if termino == True: 
           break
 
       elif hubo_envido == False:
-        puntos_pie, puntos_mano, puntos_truco, termino, hubo_envido, carta1_pie, cartas_pie, ganador, quiero  = F.JugarPrimera (pie, puntos_pie, cartas_pie, mano, puntos_mano, cartasmano, puntos_truco, quiero, mano)
+        puntos_pie, puntos_mano, puntos_truco, termino, hubo_envido, carta1_pie, cartas_pie, ganador, quiero  = JugarPrimera (pie, puntos_pie, cartas_pie, mano, puntos_mano, cartasmano, puntos_truco, quiero, mano)
 
         if termino == True:
           break
@@ -166,36 +172,36 @@ def Jugar():
 
       if ganador1 == pie: #el pie gano primera arranca 2 el
         
-        puntos_pie, puntos_mano, puntos_truco, termino, carta2_pie, cartas_pie, ganador, quiero = F.Jugar_Segunda (pie, puntos_pie, mano, puntos_mano, cartas_pie, puntos_truco, quiero)
+        puntos_pie, puntos_mano, puntos_truco, termino, carta2_pie, cartas_pie, ganador, quiero = Jugar_Segunda (pie, puntos_pie, mano, puntos_mano, cartas_pie, puntos_truco, quiero)
 
         if termino == True: 
           break
 
-        puntos_mano, puntos_pie, puntos_truco, termino, carta2_mano, cartas_mano, ganador, quiero = F.Jugar_Segunda (mano, puntos_mano, pie, puntos_pie, cartas_mano, puntos_truco, quiero)
+        puntos_mano, puntos_pie, puntos_truco, termino, carta2_mano, cartas_mano, ganador, quiero = Jugar_Segunda (mano, puntos_mano, pie, puntos_pie, cartas_mano, puntos_truco, quiero)
         
         if termino == True: 
           break
 
       elif ganador1 == mano: #la mano gano primera arranca la 2 el
         
-        puntos_mano, puntos_pie, puntos_truco, termino, carta2_mano, cartas_mano, ganador, quiero = F.Jugar_Segunda (mano, puntos_mano, pie, puntos_pie, cartas_mano, puntos_truco, quiero)
+        puntos_mano, puntos_pie, puntos_truco, termino, carta2_mano, cartas_mano, ganador, quiero = Jugar_Segunda (mano, puntos_mano, pie, puntos_pie, cartas_mano, puntos_truco, quiero)
         
         if termino == True: 
           break
 
-        puntos_pie, puntos_mano, puntos_truco, termino, carta2_pie, cartas_pie, ganador, quiero = F.Jugar_Segunda (pie, puntos_pie, mano, puntos_mano, cartas_pie, puntos_truco, quiero)
+        puntos_pie, puntos_mano, puntos_truco, termino, carta2_pie, cartas_pie, ganador, quiero = Jugar_Segunda (pie, puntos_pie, mano, puntos_mano, cartas_pie, puntos_truco, quiero)
         
         if termino == True: 
           break
 
       elif  parda1 == True: #Se juega la parda
         
-        puntos_mano, puntos_pie, puntos_truco, termino, carta2_mano, cartas_mano, ganador, quiero = F.Jugar_Segunda (mano, puntos_mano, pie, puntos_pie, cartas_mano, puntos_truco, quiero)
+        puntos_mano, puntos_pie, puntos_truco, termino, carta2_mano, cartas_mano, ganador, quiero = Jugar_Segunda (mano, puntos_mano, pie, puntos_pie, cartas_mano, puntos_truco, quiero)
         
         if termino == True: 
           break
         
-        puntos_pie, puntos_mano, puntos_truco, termino, carta2_pie, cartas_pie, ganador, quiero = F.Jugar_Segunda (pie, puntos_pie, mano, puntos_mano, cartas_pie, puntos_truco, quiero)
+        puntos_pie, puntos_mano, puntos_truco, termino, carta2_pie, cartas_pie, ganador, quiero = Jugar_Segunda (pie, puntos_pie, mano, puntos_mano, cartas_pie, puntos_truco, quiero)
         
         if termino == True: 
           break
@@ -244,34 +250,34 @@ def Jugar():
 
       if ganador2 == pie:                 #pie gana 2 arranca en 3
       
-        puntos_pie, puntos_mano, puntos_truco, termino, carta3_pie, cartas_pie, ganador, quiero = F.Jugar_Tercera (pie, puntos_pie, mano, puntos_mano, cartas_pie, puntos_truco, quiero)
+        puntos_pie, puntos_mano, puntos_truco, termino, carta3_pie, cartas_pie, ganador, quiero = Jugar_Tercera (pie, puntos_pie, mano, puntos_mano, cartas_pie, puntos_truco, quiero)
 
         if termino == True: 
           break
 
-        puntos_mano, puntos_pie, puntos_truco, termino, carta3_mano, cartas_mano, ganador, quiero = F.Jugar_Tercera (mano, puntos_mano, pie, puntos_pie, cartas_mano, puntos_truco, quiero)
+        puntos_mano, puntos_pie, puntos_truco, termino, carta3_mano, cartas_mano, ganador, quiero = Jugar_Tercera (mano, puntos_mano, pie, puntos_pie, cartas_mano, puntos_truco, quiero)
         
         if termino == True: 
           break
 
       elif ganador2 == mano: #mano gano 2 arranca en 3
-        puntos_mano, puntos_pie, puntos_truco, termino, carta3_mano, cartas_mano, ganador, quiero = F.Jugar_Tercera (mano, puntos_mano, pie, puntos_pie, cartas_mano, puntos_truco, quiero)
+        puntos_mano, puntos_pie, puntos_truco, termino, carta3_mano, cartas_mano, ganador, quiero = Jugar_Tercera (mano, puntos_mano, pie, puntos_pie, cartas_mano, puntos_truco, quiero)
         
         if termino == True: 
           break
 
-        puntos_pie, puntos_mano, puntos_truco, termino, carta3_pie, cartas_pie, ganador, quiero = F.Jugar_Tercera (pie, puntos_pie, mano, puntos_mano, cartas_pie, puntos_truco, quiero)
+        puntos_pie, puntos_mano, puntos_truco, termino, carta3_pie, cartas_pie, ganador, quiero = Jugar_Tercera (pie, puntos_pie, mano, puntos_mano, cartas_pie, puntos_truco, quiero)
         
         if termino == True: 
           break
         
       elif  parda2 == True and parda1 == True: #Se juega la parda
-        puntos_mano, puntos_pie, puntos_truco, termino, carta3_mano, cartas_mano, ganador, quiero = F.Jugar_Tercera (mano, puntos_mano, pie, puntos_pie, cartas_mano, puntos_truco, quiero)
+        puntos_mano, puntos_pie, puntos_truco, termino, carta3_mano, cartas_mano, ganador, quiero = Jugar_Tercera (mano, puntos_mano, pie, puntos_pie, cartas_mano, puntos_truco, quiero)
         
         if termino == True: 
           break
         
-        puntos_pie, puntos_mano, puntos_truco, termino, carta3_pie, cartas_pie, ganador, quiero = F.Jugar_Tercera (pie, puntos_pie, mano, puntos_mano, cartas_pie, puntos_truco, quiero)
+        puntos_pie, puntos_mano, puntos_truco, termino, carta3_pie, cartas_pie, ganador, quiero = Jugar_Tercera (pie, puntos_pie, mano, puntos_mano, cartas_pie, puntos_truco, quiero)
         
         if termino == True: 
           break
@@ -327,11 +333,11 @@ def Jugar():
     if puntos1 > puntos2:
       print('\nFELICITACIONES ' + p1 + '!!! USTED HA GANADO LA PARTIDA!!!')
       registro_partidas.write('\nFELICITACIONES ' + p1 + '!!! USTED HA GANADO LA PARTIDA!!!')
-      ganador_final = "gano {}, {} a {}".format(p1,puntos1, puntos2) 
+      ganador_final = "gano {}, {} a {}".format(p1, puntos1, puntos2) 
     elif puntos2 > puntos1:
       print('\nFELICITACIONES ' + p2 + '!!! USTED HA GANADO LA PARTIDA!!!')
       registro_partidas.write('\nFELICITACIONES ' + p2 + '!!! USTED HA GANADO LA PARTIDA!!!')
-      ganador_final = "gano {}, {} a {}".format(p2,puntos2, puntos1) 
+      ganador_final = "gano {}, {} a {}".format(p2, puntos2, puntos1) 
     elif puntos2 == puntos1:
       print('\nHA HABIDO UN EMPATE.')
       registro_partidas.write('\nHA HABIDO UN EMPATE.')
@@ -339,44 +345,58 @@ def Jugar():
   elif puntos2 >= 30:
     print('\nFELICITACIONES ' + p2 + '!!! USTED HA GANADO LA PARTIDA!!!')
     registro_partidas.write('\nFELICITACIONES ' + p2 + '!!! USTED HA GANADO LA PARTIDA!!!')
+    ganador_final = "gano {}, {} a {}".format(p2, puntos2, puntos1) 
 
   elif puntos1 >= 30:
     print('\nFELICITACIONES ' + p1 + '!!! USTED HA GANADO LA PARTIDA!!!')
     registro_partidas.write('\nFELICITACIONES ' + p1 + '!!! USTED HA GANADO LA PARTIDA!!!')
+    ganador_final = "gano {}, {} a {}".format(p1, puntos1, puntos2)
 
 
   dni_a_agregar=[jugador1.DNI, jugador2.DNI]
   for f in dni_a_agregar:
     if f not in lista_dni:
-      registro_jugadores.write("-"+f+"-")
+      registro_jugadores.write("-" + str(f) + "-")
 
 
-  partida_jugada = C.Partida(ganador_final, [jugador1.nombre,jugador2.nombre], lista_codigos_existentes)
-
-  escritura = ";{};{};{};{};{};/".format(str(partida_jugada.codigo_partida), partida_jugada.jugadores[0], partida_jugada.jugadores[1], partida_jugada.fecha, partida_jugada.resultado)
+  partida_jugada = Partida(ganador_final, [jugador1.nombre,jugador2.nombre], lista_codigos_existentes)
+  escritura = "{};{};{};{};{};/".format(str(partida_jugada.codigo_partida), partida_jugada.jugadores[0], partida_jugada.jugadores[1], partida_jugada.fecha, partida_jugada.resultado)
   registro_codigos.write(escritura)
 
 opcion2 = 1
 while opcion2 != 3:
-  print("Bienvenido! ¿Qué desea hacer?")
+
+  print("\nBienvenido! ¿Qué desea hacer?")
   print("\n1. Buscar una partida")
-  print("\n2.Jugar un partido de Truco")
-  print("\n3.Salir")
-  opcion = input("Elija: ")
-  while opcion not in ["1","2", "3"]:
-    opcion = input("Error. Elija entre 1,2 o 3: ")
-  opcion2 = int(opcion)
+  print("\n2. Jugar un partido de Truco")
+  print("\n3. Salir")
+  opcion2 = input("\nElija: ")
+
+  while opcion2 not in ['1', '2', '3']:
+    opcion2 = input("Error. Elija entre 1,2 o 3: ")
+  opcion2 = int(opcion2)
+  
+  
   if opcion2 == 1:
-    codigo_a_buscar = int(input("Por favor ingrese el codigo de partida"))
-    while codigo_a_buscar not in lista_codigos_existentes:
-      codigo_a_buscar = int(input("Error. Intente nuevamente. Por favor ingrese el codigo de partida: "))
+    codigo_correcto = False
+    while codigo_correcto == False:
+      try:
+        codigo_a_buscar = int(input("Por favor ingrese el codigo de partida: "))
+        while codigo_a_buscar not in lista_codigos_existentes:
+          codigo_a_buscar = int(input("Error. Intente nuevamente. Por favor ingrese el codigo de partida: "))
+        codigo_correcto = True
+      
+      except:
+        codigo_correcto = False
+    
     for partida in lista_partidas_final:
-      if codigo_a_buscar == partida[0]:
+      #print(partida)
+      if codigo_a_buscar == int(partida[0]):
         partida_encontrada = partida
-      else:
-        print("No se pudo encontrar su partida")
-    impresion = "La partida {} entre {} y {} salio {} y ocurrio el dia: {}".format(partida_encontrada[0],partida_encontrada[1], partida_encontrada[2], partida_encontrada[3], partida_encontrada[4])
+
+    impresion = "La partida {} entre {} y {} salio {} y ocurrio el dia: {}".format(partida_encontrada[0],partida_encontrada[1], partida_encontrada[2], partida_encontrada[4], partida_encontrada[3])
     print(impresion)
+  
   elif opcion2 == 2:
     Jugar()
 

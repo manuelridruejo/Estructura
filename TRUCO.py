@@ -10,8 +10,9 @@ def CantarTruco (p1, p2):
   print('3. No quiero')
   opcion = (input('Elija:'))
 
-  while opcion not in [1, 2, 3]:
+  while opcion not in ['1', '2', '3']:
     opcion = (input('Por favor, elija 1, 2 o 3: '))
+  opcion = int(opcion)
 
   if opcion == 1:
     puntos_truco, termino, ganador, quiero = CantarReTruco (p2, p1)
@@ -42,8 +43,9 @@ def CantarReTruco (p1, p2):
   print('3. No quiero')
   opcion = (input('Elija:'))
 
-  while opcion not in [1, 2, 3]:
+  while opcion not in ['1', '2', '3']:
     opcion = (input('Por favor, elija 1, 2 o 3: '))
+  opcion = int(opcion)
 
   if opcion == 1:
     puntos_truco, termino, ganador, quiero = CantarValeCuatro (p2, p1)
@@ -73,8 +75,9 @@ def CantarValeCuatro (p1, p2):
   print('2. No quiero')
   opcion = (input('Elija:'))
 
-  while opcion not in [1, 2]:
+  while opcion not in ['1', '2']:
     opcion = (input('Por favor, elija 1 o 2: '))
+  opcion = int(opcion)
 
   if opcion == 1:
     print('\n' + p2 + ', ha dicho QUIERO')

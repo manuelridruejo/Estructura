@@ -1,6 +1,6 @@
 from random import shuffle, randint
 from datetime import date
-print(date.today()) 
+ 
 PALOS = ["Oro", "Espada", "Copa", "Basto"] # Variable global en mayúsculas Guía PEP-8
 NUMEROS = [1, 2, 3, 4, 5, 6, 7, 10, 11, 12]
 JERARQUIAS = {
@@ -155,23 +155,27 @@ class Jugador():
 
 
 class Jugadores():
+
     def __init__ (self, lista_jugadores) -> None:
       self.lista_jugadores = lista_jugadores
+
     def agregar_jugadores (self,jugador):
       self.lista_jugadores.append (jugador.nombre_usuario)
 
 
 class Partida():
-    def __init__ (self, resultado : str,jugadores, lista_partidas):
+
+    def __init__ (self, resultado : str, jugadores, lista_partidas):
         self.fecha = date.today()
-        self.codigo_partida = Partida.asignar_codigo (lista_partidas)
+        self.codigo_partida = self.asignar_codigo (lista_partidas)
         self.resultado = resultado
         self.jugadores = jugadores
+
     def asignar_codigo (self, lista_partidas):
         return max(lista_partidas) + 1
 
-    def __str__ (self) -> str:
-        return "La partida {} entre {} y {} salio {} y ocurrio el dia: {}".format(self.codigo_partida, self.jugadores[0], self.jugadores[1], self.resultado, self.fecha)
+    def __str__ (self):
+        return "La partida {} entre {} y {} , {} y ocurrio el dia: {}".format(self.codigo_partida, self.jugadores[0], self.jugadores[1], self.resultado, self.fecha)
     
 
 class Partidas():
